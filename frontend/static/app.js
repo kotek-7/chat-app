@@ -1,4 +1,4 @@
-const API_BASE = "https://github.com/kotek-7/chat-app";
+const API_BASE = "https://doer-chat-api.up.railway.app";
 
 const messageListEl = document.getElementById("messageList");
 const messageFormEl = document.getElementById("messageForm");

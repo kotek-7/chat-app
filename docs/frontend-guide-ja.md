@@ -3,7 +3,7 @@
 このガイドは、初心者が「APIを使ってLINE風チャット画面を作る」ことだけに集中できるように書いています。
 
 ## 1. 先に決めること
-- APIのベースURL（例: `http://localhost:3000`）
+- APIのベースURL（イベント共通）: `https://doer-chat-api.up.railway.app`
 - 今回使うルームID: `global`（固定）
 
 ## 2. 最小機能

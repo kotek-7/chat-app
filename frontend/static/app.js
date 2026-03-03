@@ -1,4 +1,4 @@
-const API_BASE = window.API_BASE || "http://localhost:3000";
+const API_BASE = "https://github.com/kotek-7/chat-app";
 
 const messageListEl = document.getElementById("messageList");
 const messageFormEl = document.getElementById("messageForm");

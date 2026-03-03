@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LINEみたいなチャット</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>AIと一緒にLINE作り会</h1>
+      <p class="caption">グローバルルーム: <strong>Global Room</strong></p>
+
+      <section class="panel">
+        <ul id="messageList" class="message-list"></ul>
+      </section>
+
+      <section class="panel">
+        <form id="messageForm" class="form">
+          <label>
+            名前
+            <input id="userName" name="userName" type="text" maxlength="40" required />
+          </label>
+
+          <label>
+            メッセージ
+            <textarea id="text" name="text" maxlength="500" required></textarea>
+          </label>
+
+          <button type="submit">投稿</button>
+          <p id="status" class="status"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

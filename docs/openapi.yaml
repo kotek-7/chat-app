@@ -1,0 +1,143 @@
+openapi: 3.0.3
+info:
+  title: LINE-like Chat API
+  version: 1.0.0
+  description: |
+    イベント向けの最小チャットAPIです。
+    ルームは global の1つのみを想定しています。
+servers:
+  - url: http://localhost:3000
+paths:
+  /health:
+    get:
+      summary: ヘルスチェック
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: true
+  /api/rooms:
+    get:
+      summary: ルーム一覧を取得
+      responses:
+        '200':
+          description: ルーム一覧
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rooms:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Room'
+  /api/messages:
+    get:
+      summary: メッセージ一覧を取得
+      parameters:
+        - in: query
+          name: limit
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 200
+            default: 50
+      responses:
+        '200':
+          description: メッセージ一覧
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+    post:
+      summary: メッセージ投稿
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostMessageRequest'
+      responses:
+        '201':
+          description: 投稿成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    $ref: '#/components/schemas/Message'
+        '400':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Room:
+      type: object
+      properties:
+        id:
+          type: string
+          example: global
+        name:
+          type: string
+          example: Global Room
+      required: [id, name]
+    Message:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        roomId:
+          type: string
+          example: global
+        userName:
+          type: string
+          example: alice
+        text:
+          type: string
+          example: こんにちは
+        createdAt:
+          type: string
+          format: date-time
+          example: '2026-03-03T12:00:00.000Z'
+      required: [id, roomId, userName, text, createdAt]
+    PostMessageRequest:
+      type: object
+      properties:
+        userName:
+          type: string
+          minLength: 1
+          maxLength: 40
+        text:
+          type: string
+          minLength: 1
+          maxLength: 500
+      required: [userName, text]
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: BAD_REQUEST
+            message:
+              type: string
+              example: 入力が不正です

@@ -7,7 +7,15 @@ import { pool } from "./db";
 const app = express();
 const port = Number(process.env.PORT ?? 3000);
 
-app.use(cors({ origin: "*" }));
+const corsOptions: cors.CorsOptions = {
+  origin: "*",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(express.json());
 
 app.get("/health", (_req, res) => {
